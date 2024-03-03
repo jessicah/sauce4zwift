@@ -552,11 +552,7 @@ export class ZwiftAPI {
             }
             throw e;
         }
-        const state = processPlayerStateMessage(pb);
-        if (state.activePowerUp === 'NINJA' && state.athleteId !== this.profile.id) {
-            return;
-        }
-        return state;
+        return processPlayerStateMessage(pb);
     }
 
     convSegmentResult(x) {
@@ -1976,24 +1972,13 @@ export class GameMonitor extends events.EventEmitter {
             }
             pb.worldUpdates = worldUpdates;
         }
-        let dropList;
         for (let i = 0; i < pb.playerStates.length; i++) {
             const state = pb.playerStates[i] = processPlayerStateMessage(pb.playerStates[i]);
             if (state.athleteId === this.gameAthleteId) {
                 queueMicrotask(() => this._updateGameState(state));
-            } else if (state.activePowerUp === 'NINJA' || this.exclusions.has(getIDHash(state.athleteId))) {
-                if (!dropList) {
-                    dropList = [];
-                }
-                dropList.unshift(i);
             }
             if (state.athleteId === this.watchingAthleteId) {
                 queueMicrotask(() => this._updateWatchingState(state));
-            }
-        }
-        if (dropList) {
-            for (const i of dropList) {
-                pb.playerStates.splice(i, 1);
             }
         }
         queueMicrotask(() => this.emit('inPacket', pb));
