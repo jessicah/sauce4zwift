@@ -212,7 +212,6 @@ export class SauceApp extends EventEmitter {
             zwiftMonitorAPI: this.zwiftMonitorAPI,
             gameAthleteId: options.athleteId || this.zwiftAPI.profile.id,
             randomWatch: options.randomWatch,
-            exclusions: options.exclusions,
         }) : undefined;
         let ip;
         let gameConnection;
@@ -249,37 +248,4 @@ export class SauceApp extends EventEmitter {
             }).catch(report.error);
         }
     }
-}
-
-
-async function updateExclusions(fname) {
-    let data;
-    try {
-        const r = await fetch('https://www.sauce.llc/products/sauce4zwift/exclusions.json');
-        data = await r.json();
-    } catch(e) {
-        report.error(e);
-    }
-    if (!data) {
-        console.warn("No exclusions list found");
-        return;
-    }
-    await fs.promises.writeFile(fname, JSON.stringify(data));
-    return data;
-}
-
-
-export async function getExclusions(appPath) {
-    // use the local cache copy if possible and update in the bg.
-    const fname = path.join(appPath, 'exclusions_cached.json');
-    let data;
-    try {
-        data = JSON.parse(fs.readFileSync(fname));
-    } catch(e) {/*no-pragma*/}
-    const updating = updateExclusions(fname);
-    if (!data) {
-        console.info("Waiting for network fetch of exclusions...");
-        data = await updating;
-    }
-    return data && new Set(data.map(x => x.idhash));
 }

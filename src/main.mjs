@@ -442,9 +442,9 @@ export async function main({logEmitter, logFile, logQueue, sentryAnonId,
         await maybeUpdateAndRestart();
         return quit(1);
     }
-    const exclusions = await app.getExclusions(appPath);
-    const zwiftAPI = new zwift.ZwiftAPI({exclusions});
-    const zwiftMonitorAPI = new zwift.ZwiftAPI({exclusions});
+    const zwiftAPI = new zwift.ZwiftAPI();
+    const zwiftMonitorAPI = new zwift.ZwiftAPI();
+	const zwiftPowerAPI = new zwift.ZwiftPowerAPI();
     const mainUser = await zwiftAuthenticate({api: zwiftAPI, ident: 'zwift-login'});
     if (!mainUser) {
         await maybeUpdateAndRestart();
@@ -496,7 +496,7 @@ export async function main({logEmitter, logFile, logQueue, sentryAnonId,
             mods.setEnabled(mod.id, enable);
         }
     }
-    await sauceApp.start({...args, exclusions, zwiftAPI, zwiftMonitorAPI});
+    await sauceApp.start({...args, zwiftAPI, zwiftMonitorAPI});
     windows.openWidgetWindows();
     menu.setWebServerURL(sauceApp.getWebServerURL());
     menu.updateTrayMenu();

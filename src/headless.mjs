@@ -90,16 +90,15 @@ async function main() {
     }
     rpc.register(() => null, {name: 'getSentryAnonId'});
     rpc.register(() => null, {name: 'getSentryDSN'});
-    const exclusions = await app.getExclusions(appPath);
-    const zwiftAPI = new zwift.ZwiftAPI({exclusions});
-    const zwiftMonitorAPI = new zwift.ZwiftAPI({exclusions});
+    const zwiftAPI = new zwift.ZwiftAPI();
+    const zwiftMonitorAPI = new zwift.ZwiftAPI();
     await Promise.all([
         zwiftAPI.authenticate(args.mainUsername, args.mainPassword),
         zwiftMonitorAPI.authenticate(args.monitorUsername, args.monitorPassword),
     ]);
     mods.init(path.join(os.homedir(), 'Documents', 'SauceMods'));
     const sauceApp = new NodeSauceApp({appPath});
-    await sauceApp.start({...args, exclusions, zwiftAPI, zwiftMonitorAPI});
+    await sauceApp.start({...args, zwiftAPI, zwiftMonitorAPI});
     console.debug(`Startup took ${Date.now() - s}ms`);
 }
 main();

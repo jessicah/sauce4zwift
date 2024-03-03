@@ -331,7 +331,6 @@ export class StatsProcessor extends events.EventEmitter {
         this.setMaxListeners(100);
         this.zwiftAPI = options.zwiftAPI;
         this.gameMonitor = options.gameMonitor;
-        this.exclusions = options.exclusions || new Set();
         this.athleteId = options.athleteId || this.gameMonitor?.gameAthleteId;
         this._userDataPath = options.userDataPath;
         this.watching = null;
@@ -1047,16 +1046,14 @@ export class StatsProcessor extends events.EventEmitter {
         if (a !== undefined) {
             return a;
         }
-        if (!this.exclusions.has(zwift.getIDHash(id))) {
-            const r = this.getAthleteStmt.get(id);
-            if (r) {
-                const data = JSON.parse(r.data);
-                this._athletesCache.set(id, data);
-                return data;
-            } else {
-                this._athletesCache.set(id, null);
-            }
-        }
+		const r = this.getAthleteStmt.get(id);
+		if (r) {
+			const data = JSON.parse(r.data);
+			this._athletesCache.set(id, data);
+			return data;
+		} else {
+			this._athletesCache.set(id, null);
+		}
     }
 
     async getAthlete(ident, {refresh, noWait, allowFetch}={}) {
@@ -1275,9 +1272,6 @@ export class StatsProcessor extends events.EventEmitter {
     }
 
     handleChatPayload(payload, ts) {
-        if (this.exclusions.has(zwift.getIDHash(payload.from))) {
-            return;
-        }
         for (let i = 0; i < this._chatHistory.length && i < 10; i++) {
             const x = this._chatHistory[i];
             if (x.ts === ts && x.from === payload.from) {

@@ -290,7 +290,6 @@ function seedToBuffer(num) {
 
 export class ZwiftAPI {
     constructor(options={}) {
-        this.exclusions = options.exclusions || new Set();
     }
 
     async authenticate(username, password, options={}) {
@@ -471,9 +470,6 @@ export class ZwiftAPI {
     }
 
     async getProfile(id, options) {
-        if (this.exclusions.has(getIDHash(id))) {
-            return;
-        }
         try {
             return await this.fetchJSON(`/api/profiles/${id}`, options);
         } catch(e) {
@@ -499,9 +495,6 @@ export class ZwiftAPI {
         const m = new Map(unordered.map(x => [x.id, x]));
         return ids.map(_id => {
             const id = +_id;
-            if (this.exclusions.has(getIDHash(id))) {
-                return;
-            }
             const x = m.get(id);
             if (!x) {
                 console.debug('Missing profile:', id);
@@ -526,9 +519,6 @@ export class ZwiftAPI {
     }
 
     async getActivities(id) {
-        if (this.exclusions.has(getIDHash(id))) {
-            return;
-        }
         try {
             return await this.fetchJSON(`/api/profiles/${id}/activities`);
         } catch(e) {
@@ -540,9 +530,6 @@ export class ZwiftAPI {
     }
 
     async getPlayerState(id) {
-        if (this.exclusions.has(getIDHash(id))) {
-            return;
-        }
         let pb;
         try {
             pb = await this.fetchPB(`/relay/worlds/1/players/${id}`, {protobuf: 'PlayerState'});
@@ -622,16 +609,10 @@ export class ZwiftAPI {
     }
 
     async getFollowing(athleteId, options={}) {
-        if (this.exclusions.has(getIDHash(athleteId))) {
-            return [];
-        }
         return await this.fetchPaged(`/api/profiles/${athleteId}/followees`, options);
     }
 
     async getFollowers(athleteId, options={}) {
-        if (this.exclusions.has(getIDHash(athleteId))) {
-            return [];
-        }
         return await this.fetchPaged(`/api/profiles/${athleteId}/followers`, options);
     }
 
@@ -654,9 +635,6 @@ export class ZwiftAPI {
 
     async _giveRideon(to, from, activity=0) {
         // activity 0 is an in-game rideon
-        if (this.exclusions.has(getIDHash(to))) {
-            return;
-        }
         await this.fetchJSON(`/api/profiles/${to}/activities/${activity}/rideon`, {
             method: 'POST',
             json: {profileId: from},
@@ -1311,7 +1289,6 @@ export class GameMonitor extends events.EventEmitter {
         this.randomWatch = options.randomWatch;
         this.gameAthleteId = options.gameAthleteId;
         this.athleteId = this.api.profile.id;
-        this.exclusions = options.exclusions || new Set();
         this.watchingAthleteId = null;
         this.courseId = null;
         this._udpChannels = [];
