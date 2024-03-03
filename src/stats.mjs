@@ -75,9 +75,9 @@ async function highResSleepTill(deadline) {
     state.macro = macro;
 }
 
-setInterval(() => {
+/*setInterval(() => {
     console.log(_hrSleepState);
-}, 1000);
+}, 1000);*/
 
 
 function updateRoadDistance(courseId, roadId) {
@@ -2206,8 +2206,8 @@ export class StatsProcessor extends events.EventEmitter {
             slAvg(t - lastSl);
             if (sli % 1 === 0) {
                 const elapsed = t - start;
-                console.log(t, target, target - t, 'sleep ', 'totavg:', elapsed / sli, 'i:', sli, 'rollavg:', slAvg.get(),
-                            'last:', t - lastSl);
+                /*console.log(t, target, target - t, 'sleep ', 'totavg:', elapsed / sli, 'i:', sli, 'rollavg:', slAvg.get(),
+                            'last:', t - lastSl);*/
             }
             lastSl = t;
 
