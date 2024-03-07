@@ -2844,15 +2844,15 @@
 		"worldId": 1
 	},
 	{
-		"ascentInMeters": 334.8,
-		"distanceInMeters": 51430.3,
+		"ascentInMeters": 355.2,
+		"distanceInMeters": 55634.3,
 		"eventOnly": true,
 		"eventPaddocks": "1,2,3,4",
 		"freeRideLeadinAscentInMeters": 0,
-		"freeRideLeadinDistanceInMeters": 115.3,
+		"freeRideLeadinDistanceInMeters": 15.3,
 		"id": 3261167746,
 		"leadinAscentInMeters": 0.1,
-		"leadinDistanceInMeters": 293.9,
+		"leadinDistanceInMeters": 193.9,
 		"manifest": [
 			{
 				"end": 0.9828947442,
@@ -3133,6 +3133,12 @@
 				"end": 0.4859487184012927,
 				"reverse": true,
 				"roadId": 23,
+				"start": 0
+			},
+			{
+				"end": 1,
+				"reverse": true,
+				"roadId": 23,
 				"start": 0.171110608
 			},
 			{
@@ -3147,7 +3153,7 @@
 			}
 		],
 		"meetupLeadinAscentInMeters": 0,
-		"meetupLeadinDistanceInMeters": 115.3,
+		"meetupLeadinDistanceInMeters": 15.3,
 		"name": "Spiral into the Volcano",
 		"useAlternateEventRamp": true,
 		"worldId": 1
@@ -4583,6 +4589,90 @@
 		"worldId": 1
 	},
 	{
+		"ascentInMeters": 144.42,
+		"blockedForMeetups": false,
+		"distanceInMeters": 12416.17,
+		"eventOnly": true,
+		"eventPaddocks": "1,2,3,4",
+		"freeRideLeadinAscentInMeters": 0,
+		"freeRideLeadinDistanceInMeters": 50.4,
+		"id": 243949867,
+		"leadinAscentInMeters": 0.1,
+		"leadinDistanceInMeters": 193.9,
+		"levelLocked": 0,
+		"manifest": [
+			{
+				"end": 0.9828627266173271,
+				"leadin": true,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.9828627266173271
+			},
+			{
+				"end": 0.9828947442,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.4162624366959557
+			},
+			{
+				"end": 0.8727073824402567,
+				"roadId": 118,
+				"start": 0.3846480166601154
+			},
+			{
+				"end": 0.5606266040782024,
+				"reverse": true,
+				"roadId": 114,
+				"start": 0.05401915942398878
+			},
+			{
+				"end": 1,
+				"roadId": 0,
+				"start": 0.6088769656319202
+			},
+			{
+				"end": 0.32082599392513783,
+				"roadId": 0,
+				"start": 0
+			},
+			{
+				"end": 0.8149099642709023,
+				"roadId": 126,
+				"start": 0.34934018418510343
+			},
+			{
+				"end": 0.6137103866646304,
+				"roadId": 119,
+				"start": 0.47232167983242584
+			},
+			{
+				"end": 0.9243990539274622,
+				"reverse": true,
+				"roadId": 125,
+				"start": 0.49130432498979826
+			},
+			{
+				"end": 0.1333667232656197,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0
+			},
+			{
+				"end": 1,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.9828947442
+			}
+		],
+		"meetupLeadinAscentInMeters": 0,
+		"meetupLeadinDistanceInMeters": 50.4,
+		"name": "Loop de Loop",
+		"sportType": 3,
+		"supportedLaps": true,
+		"useAlternateEventRamp": true,
+		"worldId": 1
+	},
+	{
 		"ascentInMeters": 883.3,
 		"distanceBetweenFirstLastLrCPsInMeters": 6.9,
 		"distanceInMeters": 45693.6,
@@ -5059,6 +5149,49 @@
 		"meetupLeadinAscentInMeters": 0.1,
 		"meetupLeadinDistanceInMeters": 19.3,
 		"name": "Big Flat 8",
+		"worldId": 1
+	},
+	{
+		"ascentInMeters": 334.9,
+		"blockedForMeetups": false,
+		"distanceInMeters": 5789.7,
+		"eventOnly": true,
+		"eventPaddocks": "6,7,8,9,10",
+		"freeRideLeadinAscentInMeters": 0,
+		"freeRideLeadinDistanceInMeters": 150,
+		"id": 2953010285,
+		"leadinAscentInMeters": 0,
+		"leadinDistanceInMeters": 209.8,
+		"levelLocked": 0,
+		"manifest": [
+			{
+				"end": 0.7757308699769614,
+				"leadin": true,
+				"roadId": 36,
+				"start": 0.7757308699769614
+			},
+			{
+				"end": 0.997019762885054,
+				"roadId": 36,
+				"start": 0.7779260925353502
+			},
+			{
+				"end": 0.3413285345406346,
+				"roadId": 41,
+				"start": 0.1884583554184639
+			},
+			{
+				"end": 0.8830215400126687,
+				"reverse": true,
+				"roadId": 6,
+				"start": 0.5861978100562586
+			}
+		],
+		"meetupLeadinAscentInMeters": 0,
+		"meetupLeadinDistanceInMeters": 150.1,
+		"name": "Mountain Mash",
+		"sportType": 3,
+		"useAlternateEventRamp": true,
 		"worldId": 1
 	},
 	{
@@ -5640,6 +5773,235 @@
 		"meetupLeadinDistanceInMeters": 61.9000015259,
 		"name": "Accelerate to Elevate",
 		"sportType": 3,
+		"worldId": 1
+	},
+	{
+		"ascentBetweenFirstLastLrCPsInMeters": 0,
+		"ascentInMeters": 822,
+		"blockedForMeetups": false,
+		"distanceBetweenFirstLastLrCPsInMeters": 91.1,
+		"distanceInMeters": 79744.9,
+		"eventOnly": true,
+		"eventPaddocks": "1,2,3,4",
+		"freeRideLeadinAscentInMeters": 56.6,
+		"freeRideLeadinDistanceInMeters": 1595.1,
+		"id": 762151244,
+		"leadinAscentInMeters": 56.8,
+		"leadinDistanceInMeters": 2035,
+		"levelLocked": 0,
+		"manifest": [
+			{
+				"end": 0.18440933895300832,
+				"leadin": true,
+				"roadId": 0,
+				"start": 0.006660526364044017
+			},
+			{
+				"end": 0.4292596061580678,
+				"roadId": 0,
+				"start": 0.18512737878585994
+			},
+			{
+				"end": 0.9989489674426243,
+				"reverse": true,
+				"roadId": 5,
+				"start": 0.10137315350823159
+			},
+			{
+				"end": 0.9993789220879419,
+				"reverse": true,
+				"roadId": 1,
+				"start": 0.12979266296303849
+			},
+			{
+				"end": 0.5892985561262816,
+				"roadId": 85,
+				"start": 0.3135726343780546
+			},
+			{
+				"end": 0.7643774475274348,
+				"roadId": 79,
+				"start": 0.05763146119249859
+			},
+			{
+				"end": 0.7481634113297405,
+				"reverse": true,
+				"roadId": 80,
+				"start": 0.13644204436955817
+			},
+			{
+				"end": 0.9092227185506321,
+				"reverse": true,
+				"roadId": 81,
+				"start": 0.26082177677248986
+			},
+			{
+				"end": 0.9089839101660836,
+				"reverse": true,
+				"roadId": 78,
+				"start": 0.5533709781519066
+			},
+			{
+				"end": 0.9092225856054726,
+				"reverse": true,
+				"roadId": 154,
+				"start": 0.024669189549161606
+			},
+			{
+				"end": 0.9942153366824377,
+				"reverse": true,
+				"roadId": 149,
+				"start": 0.004118297578379507
+			},
+			{
+				"end": 0.9222853799213302,
+				"roadId": 147,
+				"start": 0.12104441120854523
+			},
+			{
+				"end": 0.7353695596386023,
+				"roadId": 35,
+				"start": 0.5254956518055345
+			},
+			{
+				"end": 0.7138377672830514,
+				"roadId": 121,
+				"start": 0.4160526769070183
+			},
+			{
+				"end": 0.903127626484049,
+				"reverse": true,
+				"roadId": 128,
+				"start": 0.09087555810667741
+			},
+			{
+				"end": 0.6045943862160851,
+				"roadId": 120,
+				"start": 0.32563325097734713
+			},
+			{
+				"end": 0.34471259608303106,
+				"reverse": true,
+				"roadId": 35,
+				"start": 0.008494626864937535
+			},
+			{
+				"end": 0.8941952269931951,
+				"roadId": 40,
+				"start": 0.22603885670750928
+			},
+			{
+				"end": 0.9922400893305712,
+				"roadId": 36,
+				"start": 0.05899095119501259
+			},
+			{
+				"end": 0.9471722464023562,
+				"roadId": 115,
+				"start": 0.12007119895484496
+			},
+			{
+				"end": 0.1627391379158397,
+				"reverse": true,
+				"roadId": 6,
+				"start": 0.05970939325375656
+			},
+			{
+				"end": 0.8942784284639252,
+				"reverse": true,
+				"roadId": 93,
+				"start": 0.3679690817986094
+			},
+			{
+				"end": 0.944236559417276,
+				"roadId": 77,
+				"start": 0.04842571194638189
+			},
+			{
+				"end": 0.6420995110253815,
+				"reverse": true,
+				"roadId": 92,
+				"start": 0.16176877633771997
+			},
+			{
+				"end": 0.9107913726316763,
+				"roadId": 81,
+				"start": 0.2952117624135919
+			},
+			{
+				"end": 0.7928813275650773,
+				"roadId": 80,
+				"start": 0.29829809470365526
+			},
+			{
+				"end": 0.7543398664999738,
+				"reverse": true,
+				"roadId": 79,
+				"start": 0.058900417051903325
+			},
+			{
+				"end": 0.7388454287446277,
+				"reverse": true,
+				"roadId": 84,
+				"start": 0.37607465029031784
+			},
+			{
+				"end": 0.1078993164201104,
+				"reverse": true,
+				"roadId": 1,
+				"start": 0.004246649635884786
+			},
+			{
+				"end": 0.7660444130023307,
+				"reverse": true,
+				"roadId": 3,
+				"start": 0.09856882127284647
+			},
+			{
+				"end": 0.027002969038389023,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0
+			},
+			{
+				"end": 1,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.14217943436886926
+			},
+			{
+				"end": 0.7862832454212484,
+				"reverse": true,
+				"roadId": 119,
+				"start": 0.3258866776864876
+			},
+			{
+				"end": 0.4071392000386226,
+				"roadId": 0,
+				"start": 0.32878582312898424
+			},
+			{
+				"end": 0.9430362753850554,
+				"reverse": true,
+				"roadId": 114,
+				"start": 0.05546018376211502
+			},
+			{
+				"end": 1,
+				"roadId": 0,
+				"start": 0.6088116890038506
+			},
+			{
+				"end": 0.18335366497044242,
+				"roadId": 0,
+				"start": 0
+			}
+		],
+		"meetupLeadinAscentInMeters": 56.6,
+		"meetupLeadinDistanceInMeters": 1595,
+		"name": "Zwift Games 2024 Epic",
+		"sportType": 3,
+		"supportedLaps": true,
 		"worldId": 1
 	},
 	{
@@ -7541,6 +7903,58 @@
 		"name": "The Big Ring",
 		"sportType": 3,
 		"supportedLaps": true,
+		"worldId": 1
+	},
+	{
+		"ascentInMeters": 212.1,
+		"blockedForMeetups": false,
+		"distanceInMeters": 19315.2,
+		"eventOnly": true,
+		"eventPaddocks": "11,12,13,14,15",
+		"freeRideLeadinAscentInMeters": 0,
+		"freeRideLeadinDistanceInMeters": 155.4,
+		"id": 4009130866,
+		"leadinAscentInMeters": 0,
+		"leadinDistanceInMeters": 224.6,
+		"levelLocked": 0,
+		"manifest": [
+			{
+				"end": 0.9345416961756428,
+				"leadin": true,
+				"reverse": true,
+				"roadId": 81,
+				"start": 0.9345416961756428
+			},
+			{
+				"end": 0.9341645331955792,
+				"reverse": true,
+				"roadId": 81,
+				"start": 0.26082156263344025
+			},
+			{
+				"end": 0.9087114098350383,
+				"reverse": true,
+				"roadId": 78,
+				"start": 0.5530984778208458
+			},
+			{
+				"end": 0.9078523272897007,
+				"reverse": true,
+				"roadId": 154,
+				"start": 0.022613802075503786
+			},
+			{
+				"end": 0.9941317109530484,
+				"reverse": true,
+				"roadId": 149,
+				"start": 0.5831635170857663
+			}
+		],
+		"meetupLeadinAscentInMeters": 0,
+		"meetupLeadinDistanceInMeters": 155.4,
+		"name": "Jurassic Coast",
+		"sportType": 3,
+		"useAlternateEventRamp": true,
 		"worldId": 1
 	},
 	{
@@ -16536,6 +16950,100 @@
 		"name": "Royal Pump Room 8",
 		"sportType": 3,
 		"supportedLaps": true,
+		"useAlternateEventRamp": true,
+		"worldId": 7
+	},
+	{
+		"ascentInMeters": 259.4,
+		"blockedForMeetups": false,
+		"distanceInMeters": 17148.8,
+		"eventOnly": true,
+		"eventPaddocks": "1,2,3,4,5",
+		"freeRideLeadinAscentInMeters": 41.9,
+		"freeRideLeadinDistanceInMeters": 2697.2,
+		"id": 87631443,
+		"leadinAscentInMeters": 41.9,
+		"leadinDistanceInMeters": 2764,
+		"levelLocked": 0,
+		"manifest": [
+			{
+				"end": 0.9923101543694202,
+				"leadin": true,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.713670327180286
+			},
+			{
+				"end": 0.7127594560142032,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.6224386278462901
+			},
+			{
+				"end": 0.8803610946994016,
+				"reverse": true,
+				"roadId": 1,
+				"start": 0.2755759261106694
+			},
+			{
+				"end": 0.9278462216278349,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.623326086703591
+			},
+			{
+				"end": 0.9019605650060539,
+				"reverse": true,
+				"roadId": 1,
+				"start": 0.31445497266271255
+			},
+			{
+				"end": 0.9285546769792881,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.6223140076302407
+			},
+			{
+				"end": 0.8774811653250132,
+				"reverse": true,
+				"roadId": 1,
+				"start": 0.27269599673628087
+			},
+			{
+				"end": 0.9277883885380425,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.6233260867037047
+			},
+			{
+				"end": 0.9019605650058625,
+				"reverse": true,
+				"roadId": 1,
+				"start": 0.31445497266252115
+			},
+			{
+				"end": 0.9285546769792881,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.6223140076302407
+			},
+			{
+				"end": 0.877481165324705,
+				"reverse": true,
+				"roadId": 1,
+				"start": 0.27269599673597267
+			},
+			{
+				"end": 0.9277883885380425,
+				"reverse": true,
+				"roadId": 0,
+				"start": 0.497728914181079
+			}
+		],
+		"meetupLeadinAscentInMeters": 41.9,
+		"meetupLeadinDistanceInMeters": 2697.2,
+		"name": "Queens Highway After Party",
+		"sportType": 1,
 		"useAlternateEventRamp": true,
 		"worldId": 7
 	},
