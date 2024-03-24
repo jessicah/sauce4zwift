@@ -214,17 +214,17 @@ class DataCollector {
             if (peak) {
                 const time = peak.lastTime();
                 peaks[p] = {
-                    avg: peak.avg(),
+                    avg: peak.avg() || 0,
                     time,
                     ts: worldTimer.toLocalTime(wtOffset + (time * 1000)),
                 };
             } else {
-                peaks[p] = {avg: null, time: null, ts: null};
+                peaks[p] = {avg: 0, time: 0, ts: 0};
             }
-            smooth[p] = roll.avg();
+            smooth[p] = roll.avg() || 0;
         }
         return {
-            avg: this.roll.avg(),
+            avg: this.roll.avg() || 0,
             max: this._maxValue,
             peaks,
             smooth,
@@ -245,7 +245,7 @@ class TimeSeriesAccumulator {
     }
 
     get() {
-        return this._value;
+        return this._value == null ? 0 : this._value;
     }
 
     configure(...args) {
@@ -321,6 +321,11 @@ class ZonesAccumulator extends TimeSeriesAccumulator {
             }
         }
         super.accumulate(time);
+    }
+
+    get() {
+        const result = super.get();
+        return result == 0 ? null : result;
     }
 }
 

@@ -267,7 +267,7 @@ export function processPlayerStateMessage(msg) {
         latency,
         routeId,
         progress,
-        workoutZone: (msg._progress & 0xF) || null,
+        workoutZone: (msg._progress & 0xF) || 1,
         kj: msg._mwHours / 1000 / (1000 / 3600),
         heading: (((msg._heading + halfCircle) / (2 * halfCircle)) * 360) % 360,  // degrees
         speed: msg._speed / 1e6,  // km/h

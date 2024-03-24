@@ -10,7 +10,7 @@ export function sum(data, offt) {
 
 export function avg(data, offt) {
     if (!data || !data.length) {
-        return;
+        return 0;
     }
     return sum(data, offt) / (data.length - (offt || 0));
 }
