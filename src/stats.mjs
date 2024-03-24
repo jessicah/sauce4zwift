@@ -420,6 +420,7 @@ export class StatsProcessor extends events.EventEmitter {
         rpc.register(this.getSegmentsForRoad, {scope: this});
         rpc.register(this.getSegmentResults, {scope: this});
         rpc.register(this.putState, {scope: this});
+        rpc.register(this.getZwiftPowerEvent, {scope: this});
         this._athleteSubs = new Map();
         if (options.gameConnection) {
             const gc = options.gameConnection;
@@ -842,6 +843,10 @@ export class StatsProcessor extends events.EventEmitter {
         for (const ad of this._athleteData.values()) {
             this._resetAthleteData(ad, wt);
         }
+    }
+
+    async getZwiftPowerEvent(id) {
+        return await this.zwiftPowerAPI.getEventSignups(id);
     }
 
     async exportFIT(id) {

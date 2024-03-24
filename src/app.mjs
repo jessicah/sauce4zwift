@@ -183,7 +183,8 @@ export class SauceApp extends EventEmitter {
         const gcs = new zwift.GameConnectionServer({ip, zwiftAPI: this.zwiftAPI, zwiftPowerAPI: this.zwiftPowerAPI});
         const rpcs = ['watch', 'join', 'teleportHome', 'say', 'wave', 'elbow',
             'takePicture', 'powerup', 'changeCamera', 'enableHUD', 'disableHUD', 'chatMessage',
-            'reverse', 'toggleGraphs', 'sendCommands', 'turnLeft', 'turnRight', 'goStraight'];
+            'reverse', 'toggleGraphs', 'sendCommands', 'turnLeft', 'turnRight', 'goStraight',
+            'eventResults',];
         for (const x of rpcs) {
             rpc.register(gcs[x].bind(gcs), {name: x});
         }

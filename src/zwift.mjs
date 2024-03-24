@@ -466,6 +466,69 @@ export class ZwiftPowerAPI {
         }
         return null;
     }
+
+    async getEventPage(zid, options) {
+        try {
+            return await this.fetchHTML(`/events.php?zid=${zid}`, options);
+        } catch(e) {
+            return null;
+        }
+    }
+
+    async getProfileResults(zwid, options) {
+        try {
+            return await this.fetchJSON(`/cache3/profile/${zwid}_all.json`, options);
+        } catch(e) {
+            if (e.status === 404) {
+                return;
+            }
+            throw e;
+        }
+    }
+
+    async getEventResults(zid, options) {
+        try {
+            return await this.fetchJSON(`/cache3/results/${zid}_view.json`, options);
+        } catch(e) {
+            if (e.status === 404) {
+                return;
+            }
+            throw e;
+        }
+    }
+
+    async getEventZwiftResults(zid, options) {
+        try {
+            return await this.fetchJSON(`/cache3/results/${zid}_zwift.json`, options);
+        } catch(e) {
+            if (e.status === 404) {
+                return;
+            }
+            throw e;
+        }
+    }
+
+    async getEventLiveData(zid, options) {
+        try {
+            return await this.fetchJSON(`/cache3/live/results_${zid}.json`, options);
+        } catch(e) {
+            if (e.status === 404) {
+                return;
+            }
+            throw e;
+        }
+    }
+
+    async getEventSignups(zid, options) {
+        try {
+            return await this.fetchJSON(`/cache3/results/${zid}_signups.json`, options);
+        } catch(e) {
+            if (e.status === 404) {
+                return;
+            }
+            throw e;
+        }
+    }
 }
 
 
@@ -2534,6 +2597,10 @@ export class GameConnectionServer extends net.Server {
                 };
             })
         });
+    }
+
+    async eventResults(id) {
+        return await this.zp.getEventResults(id);
     }
 
     async _send(o) {
