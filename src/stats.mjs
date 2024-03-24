@@ -1598,8 +1598,17 @@ export class StatsProcessor extends events.EventEmitter {
                 //state.mapurl = `https://maps.google.com/maps?` +
                 //    `q=${state.latlng[0]},${state.latlng[1]}&z=17`;
             }
+            if (prevState.activatePowerUpTime != null) {
+                state.activatePowerUpTime = prevState.activatePowerUpTime;
+                if (prevState.activatePowerUpTime != undefined && state.activePowerUp == null) {
+                    state.activatePowerUpTime = null;
+                }
+            }
         } else {
             state.grade = 0;
+        }
+        if (state.activePowerUp != null && (state.activatePowerUpTime == null || state.activatePowerUpTime == undefined)) {
+            state.activatePowerUpTime = Date.now();
         }
         const noSubgroup = null;
         const sg = state.eventSubgroupId &&
