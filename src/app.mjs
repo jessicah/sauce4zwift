@@ -66,6 +66,7 @@ export class SauceApp extends EventEmitter {
         this.appPath = appPath;
         this.zwiftAPI = undefined;
         this.zwiftMonitorAPI = undefined;
+        this.zwiftPowerAPI = undefined;
         const _this = this;
         rpc.register(function() {
             _this.resetStorageState.call(_this, /*sender*/ this);
@@ -179,7 +180,7 @@ export class SauceApp extends EventEmitter {
     }
 
     startGameConnectionServer(ip) {
-        const gcs = new zwift.GameConnectionServer({ip, zwiftAPI: this.zwiftAPI});
+        const gcs = new zwift.GameConnectionServer({ip, zwiftAPI: this.zwiftAPI, zwiftPowerAPI: this.zwiftPowerAPI});
         const rpcs = ['watch', 'join', 'teleportHome', 'say', 'wave', 'elbow',
             'takePicture', 'powerup', 'changeCamera', 'enableHUD', 'disableHUD', 'chatMessage',
             'reverse', 'toggleGraphs', 'sendCommands', 'turnLeft', 'turnRight', 'goStraight'];
@@ -208,6 +209,9 @@ export class SauceApp extends EventEmitter {
         if (options.zwiftAPI) {
             this.zwiftAPI = options.zwiftAPI;
         }
+        if (options.zwiftPowerAPI) {
+            this.zwiftPowerAPI = options.zwiftPowerAPI;
+        }
         this.gameMonitor = !options.disableMonitor ? new zwift.GameMonitor({
             zwiftMonitorAPI: this.zwiftMonitorAPI,
             gameAthleteId: options.athleteId || this.zwiftAPI.profile.id,
@@ -227,6 +231,7 @@ export class SauceApp extends EventEmitter {
             app: this,
             userDataPath: this.appPath,
             zwiftAPI: this.zwiftAPI,
+            zwiftPowerAPI: this.zwiftPowerAPI,
             gameMonitor: this.gameMonitor,
             gameConnection,
             ...options,

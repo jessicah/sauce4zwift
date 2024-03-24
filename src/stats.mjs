@@ -335,6 +335,7 @@ export class StatsProcessor extends events.EventEmitter {
         super();
         this.setMaxListeners(100);
         this.zwiftAPI = options.zwiftAPI;
+        this.zwiftPowerAPI = options.zwiftPowerAPI;
         this.gameMonitor = options.gameMonitor;
         this.athleteId = options.athleteId || this.gameMonitor?.gameAthleteId;
         this._userDataPath = options.userDataPath;

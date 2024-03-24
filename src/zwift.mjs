@@ -288,6 +288,187 @@ function seedToBuffer(num) {
 }
 
 
+export class ZwiftPowerAPI {
+    constructor(options={}) {
+        // nothing for now...
+    }
+
+    async authenticate(username, password, options={}) {
+        this._username = username;
+        this._password = password;
+
+        if (options.host) {
+            this.host = options.host;
+        }
+
+        const r1 = await this.fetch('/ucp.php?mode=login&login=external&oauth_service=oauthzpsso', {
+            host: this.host || 'zwiftpower.com',
+            noAuth: true,
+            method: 'GET',
+            ok: [200, 401, 302],
+            redirect: 'manual'
+        });
+
+        if (r1.headers.has('Location') == false) {
+            for (const item of r1.headers.raw()['set-cookie']) {
+                const pair = item.split('=');
+
+                switch (pair[0].toLowerCase()) {
+                    case 'cloudfront-policy':
+                        this._policy = pair[1].split(';')[0]; break;
+                    case 'cloudfront-signature':
+                        this._signature = pair[1].split(';')[0]; break;
+                    case 'cloudfront-key-pair-id':
+                        this._keypair = pair[1].split(';')[0]; break;
+                    default: break;
+                }
+            }
+
+            return;
+        }
+
+        const r2 = await this.fetch(r1.headers.get('Location'), {
+            noAuth: true,
+            method: 'GET',
+            ok: [200, 401, 302],
+            redirect: 'manual'
+        });
+
+        const body = r2.text();
+
+        const re = /https:\/\/secure\.zwift\.com\/auth\/realms\/zwift\/login-actions\/authenticate\?[^'"]+/m;
+        const match = re.match(body);
+        if (!match) {
+            console.log('unable to find authentication url');
+            return;
+        }
+
+        const uri = match[0].replace('&amp;', '&');
+        const formData = new FormData();
+        formData.set('username', username);
+        formData.set('password', password);
+        formData.set('rememberMe', 'on');
+
+        const r3 = await this.fetch(uri, {
+            noAuth: true,
+            method: 'POST',
+            ok: [200, 401, 302],
+            body: formData,
+            redirect: 'manual'
+        });
+/*
+        const r4 = await this.fetch(r3.headers.get('Location'), {
+            method: 'GET',
+            ok: [200, 401, 302]
+        });
+
+        for (const item of r4.headers.raw()['set-cookie']) {
+            const pair = item.split('=');
+
+            switch (pair[0].toLowerCase()) {
+                case 'cloudfront-policy':
+                    this._policy = pair[1].split(';')[0]; break;
+                case 'cloudfront-signature':
+                    this._signature = pair[1].split(';')[0]; break;
+                case 'cloudfront-key-pair-id':
+                    this._keypair = pair[1].split(';')[0]; break;
+                default: break;
+            }
+        }
+
+        console.log('ZwiftPower auth token acquired', this._policy,
+            this._signature, this._keypair);
+*/
+        // refresh in 30 minutes...
+        this._schedRefresh(30 * 60 * 1000);
+    }
+
+    isAuthenticated() {
+        return !!(this._policy && this._signature && this._keypair);
+    }
+
+    async _refreshToken() {
+        await this.authenticate(this._username, this._password);
+    }
+
+    _schedRefresh(delay) {
+        clearTimeout(this._nextRefresh);
+        console.debug('Refresh ZwiftPower login in:', fmtTime(delay));
+        this._nextRefresh = setTimeout(this._refreshToken.bind(this), Math.min(0x7fffffff, delay));
+    }
+
+    async fetch(uri, options={}, headers={}) {
+        headers = headers || {};
+        let query = options.query;
+        if (query && !(query instanceof URLSearchParams)) {
+            query = new URLSearchParams(Object.entries(query).filter(([k, v]) => v != null));
+        } else if (!query) {
+            query = new URLSearchParams();
+        }
+        // cache-busting, as ZwiftPower themselves also use
+        query.append('_', Date.now().toString());
+        if (!options.noAuth) {
+            if (!this.isAuthenticated()) {
+                throw new TypeError('Auth token not set');
+            }
+            query.append('Key-Pair-Id', this._keypair);
+            query.append('Signature', this._signature);
+            query.append('Policy', this._policy);
+        }
+        if (options.json) {
+            options.body = JSON.stringify(options.json);
+            headers['Content-Type'] = 'application/json';
+        }
+        if (options.accept) {
+            headers['Accept'] = {
+                json: 'application/json',
+                html: 'text/html'
+            }[options.accept];
+        }
+        const host = options.host || this.host || 'zwiftpower.com';
+        const q = query ? `?${query}` : '';
+        const timeout = options.timeout !== undefined ? options.timeout : 30000;
+        const abort = new AbortController();
+        const to = timeout && setTimeout(() => abort.abort(), timeout);
+        let r;
+        try {
+            r = await fetch(`https://${host}/${uri.replace(/^\//, '')}${q}`, {
+                signal: abort.signal,
+                headers,
+                ...options,
+            });
+        } finally {
+            if (to) {
+                clearTimeout(to);
+            }
+        }
+        if (!r.ok && (!options.ok || !options.ok.includes(r.status))) {
+            const msg = await r.text();
+            const e = new Error(`ZwiftPower HTTP Error: [${r.status}]: ${msg}`);
+            e.status = r.status;
+            throw e;
+        }
+        return r;
+    }
+
+    async fetchJSON(uri, options, headers) {
+        const r = await this.fetch(uri, {accept: 'json', ...options}, headers);
+        if (r.status === 204) {
+            return;
+        }
+        return await r.json();
+    }
+
+    async fetchHTML(uri, options, headers) {
+        const r = await this.fetch(uri, {accept: 'html', ...options}, headers);
+        if (r.status === 200) {
+            return await r.text();
+        }
+        return null;
+    }
+}
+
+
 export class ZwiftAPI {
     constructor(options={}) {
     }
@@ -2061,10 +2242,11 @@ export class GameMonitor extends events.EventEmitter {
 
 
 export class GameConnectionServer extends net.Server {
-    constructor({ip, zwiftAPI}) {
+    constructor({ip, zwiftAPI, zwiftPowerAPI}) {
         super();
         this.ip = ip;
         this.api = zwiftAPI;
+        this.zp = zwiftPowerAPI;
         this._socket = null;
         this._msgSize = null;
         this._msgOfft = 0;

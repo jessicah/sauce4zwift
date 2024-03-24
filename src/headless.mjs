@@ -75,6 +75,10 @@ async function main() {
          help: 'The monitor Zwift username (email)'},
         {arg: 'monitor-password', label: 'PASSWORD', required: true, env: 'MON_PASSWORD',
          help: 'The monitor Zwift password'},
+        {arg: 'zwiftpower-username', label: 'USERNAME', required: false, env: 'ZP_USERNAME',
+         help: 'The ZwiftPower username (email)'},
+        {arg: 'zwiftpower-password', label: 'PASSWORD', required: false, env: 'ZP_PASSWORD',
+         help: 'The ZwiftPower password'},
         {arg: 'athlete-id', type: 'num', label: 'ATHLETE_ID',
          help: 'Override the athlete ID for the main Zwift account'},
         {arg: 'random-watch', type: 'num', optional: true, label: 'COURSE_ID',
@@ -92,13 +96,15 @@ async function main() {
     rpc.register(() => null, {name: 'getSentryDSN'});
     const zwiftAPI = new zwift.ZwiftAPI();
     const zwiftMonitorAPI = new zwift.ZwiftAPI();
+    const zwiftPowerAPI = new zwift.ZwiftPowerAPI();
     await Promise.all([
         zwiftAPI.authenticate(args.mainUsername, args.mainPassword),
         zwiftMonitorAPI.authenticate(args.monitorUsername, args.monitorPassword),
+        zwiftPowerAPI.authenticate(args.zwiftpowerUsername || args.mainUsername, args.zwiftpowerPassword || args.mainPassword)
     ]);
     mods.init(path.join(os.homedir(), 'Documents', 'SauceMods'));
     const sauceApp = new NodeSauceApp({appPath});
-    await sauceApp.start({...args, zwiftAPI, zwiftMonitorAPI});
+    await sauceApp.start({...args, zwiftAPI, zwiftMonitorAPI, zwiftPowerAPI});
     console.debug(`Startup took ${Date.now() - s}ms`);
 }
 main();

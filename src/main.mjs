@@ -311,6 +311,37 @@ async function zwiftAuthenticate(options) {
 }
 
 
+async function zwiftPowerAuthenticate(options) {
+    try {
+        let creds;
+        const ident = options.ident;
+        if (!options.forceLogin) {
+            creds = await secrets.get(ident);
+            if (creds) {
+                try {
+                    await options.api.authenticate(creds.username, creds.password, options);
+                    console.info(`Using ZwiftPower username [${ident}]:`, creds.username);
+                    return creds.username;
+                } catch(e) {
+                    console.warn("Previous ZwiftPower login invalid:", e);
+                    // We could remove them, but it might be a network error; just leave em for now.
+                }
+            }
+        }
+        creds = await windows.zwiftLogin(options);
+        if (creds) {
+            await secrets.set(ident, creds);
+            return creds.username;
+        } else {
+        return false;
+        }
+    } catch (e) {
+        console.log('error auth to zp:', e);
+        return false;
+    }
+}
+
+
 async function maybeDownloadAndInstallUpdate({version}) {
     const confirmWin = await windows.updateConfirmationWindow(version);
     if (!confirmWin) {
@@ -475,6 +506,10 @@ export async function main({logEmitter, logFile, logQueue, sentryAnonId,
         await zwiftLogout(response === 0 ? 'main' : 'monitor');
         return restart();
     }
+    await zwiftPowerAuthenticate({
+        api: zwiftPowerAPI,
+        ident: 'zwift-login'
+    });
     await maybeUpdateAndRestart();
     const modPath = path.join(electron.app.getPath('documents'), 'SauceMods');
     for (const mod of mods.init(modPath)) {
@@ -496,7 +531,7 @@ export async function main({logEmitter, logFile, logQueue, sentryAnonId,
             mods.setEnabled(mod.id, enable);
         }
     }
-    await sauceApp.start({...args, zwiftAPI, zwiftMonitorAPI});
+    await sauceApp.start({...args, zwiftAPI, zwiftMonitorAPI, zwiftPowerAPI});
     windows.openWidgetWindows();
     menu.setWebServerURL(sauceApp.getWebServerURL());
     menu.updateTrayMenu();
