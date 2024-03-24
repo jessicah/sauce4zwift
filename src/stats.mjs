@@ -971,6 +971,7 @@ export class StatsProcessor extends events.EventEmitter {
             height: !minor && p.height ? p.height / 10 : undefined,
             gender: !minor && p.male === false ? 'female' : 'male',
             age: !minor && p.privacy && p.privacy.displayAge ? p.age : null,
+            jersey: p.rideJersey,
             level: p.achievementLevel ? Math.floor(p.achievementLevel / 100) : undefined,
             powerMeter,
             ...p.competitionMetrics,
@@ -1067,7 +1068,9 @@ export class StatsProcessor extends events.EventEmitter {
             refresh = true;
             noWait = false;
         }
-        if (refresh && this.zwiftAPI.isAuthenticated()) {
+        // FIXME: need a better way to handle this..., but this works
+        // in the meantime for updating athlete with their profile
+        if (true && this.zwiftAPI.isAuthenticated()) {
             const updating = this.zwiftAPI.getProfile(id).then(p =>
                 (p && this.updateAthlete(id, this._profileToAthlete(p))));
             if (!noWait) {
